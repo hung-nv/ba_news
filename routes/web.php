@@ -1,0 +1,61 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/administrator', function () {
+	return view('backend.auth.login');
+});
+
+Route::group(['prefix' => 'administrator', 'namespace' => 'Backend'], function () {
+	Route::get('login', ['as' => 'login', 'uses' => 'LoginController@getLogin']);
+	Route::post('login', ['as' => 'login', 'uses' => 'LoginController@postLogin']);
+	Route::get('logout', ['as' => 'logout', 'uses' => 'LoginController@getLogout']);
+});
+
+Route::group(['prefix' => 'administrator', 'middleware' => 'auth', 'namespace' => 'Backend'], function () {
+	Route::group(['middleware' => 'checkrole:1|2'], function () {
+		Route::get('/', ['as' => 'admin.dashboard', 'uses' => 'AdminSiteController@index']);
+		Route::get('user/update-account', ['as' => 'user.updateAccount', 'uses' => 'UserController@updateAccount']);
+		Route::put('user/update-account', ['as' => 'user.putUpdateAccount', 'uses' => 'UserController@account']);
+		Route::resource('post', 'PostController');
+		Route::resource('category', 'CategoryController');
+		Route::resource('page', 'PageController', ['except' => ['show']]);
+		Route::resource('game', 'GameController', ['except' => ['show']]);
+		Route::resource('advertising', 'AdvertisingController', ['except' => ['show']]);
+	});
+
+	Route::group(['middleware' => 'checkrole:1'], function () {
+		Route::resource('advanceField', 'AdvanceFieldController', ['except' => ['show']]);
+		Route::resource('menuSystem', 'MenuSystemController', ['except' => ['show']]);
+		Route::resource('user', 'UserController');
+		Route::resource('setting', 'SettingController', ['only' => ['index', 'store']]);
+		Route::post('setting/file-delete', ['uses' => 'SettingController@deleteFile']);
+		Route::get('menu', ['as' => 'setting.menu', 'uses' => 'SettingController@menu']);
+	});
+});
+
+Route::group(['namespace' => 'Frontend'], function () {
+	session(['meta' => getMeta()]);
+	Route::get('/', 'HomepageController@index');
+	Route::get('game/{slug}', ['as' => 'game.view', 'uses' => 'GameController@view'] );
+	Route::get('page/{slug}', ['as' => 'news.page', 'uses' => 'NewsController@page']);
+	Route::get('/search', ['as' => 'game.search', 'uses' => 'GameController@search']);
+	Route::get('/{slug}', ['as' => 'game.category', 'uses' => 'GameController@category']);
+});
+
+Route::get('img/{w}/{h}/{src}', function ($w, $h, $src) {
+	$img_path = public_path() . '/' . $src;
+	$img = Image::cache(function ($image) use ($w, $h, $img_path) {
+		return $image->make($img_path)->resize($w, $h);
+	});
+	return Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
+})->where('src', '[A-Za-z0-9\/\.\-\_]+');
