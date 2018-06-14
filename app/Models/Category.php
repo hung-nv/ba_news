@@ -12,6 +12,8 @@ class Category extends \Eloquent
 
     protected $fillable = ['name', 'slug', 'parent_id', 'image', 'icon', 'meta_title', 'meta_description', 'system_link_stype_id'];
 
+    protected $append = ['url'];
+
     public function posts()
     {
         return $this->belongsToMany('App\Models\Post', 'post_category', 'category_id', 'post_id');
@@ -48,5 +50,10 @@ class Category extends \Eloquent
 
     public function scopeActive($query) {
         return $query->where('status', 1);
+    }
+
+    public function getUrlAttribute($value)
+    {
+        return route('news.category', ['slug' => $this->slug]);
     }
 }
