@@ -20,7 +20,7 @@ class MenuService implements MenuInterface {
 		$data     = [
 			'slug' => $category->slug,
 			'name' => $category->name,
-			'type' => $system_link_type->name,
+			'type' => $system_link_type->slug,
 			'system_link_type_id' => $system_link_type->id
 		];
 

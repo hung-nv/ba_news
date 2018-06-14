@@ -16,6 +16,7 @@ class MenuSystemController extends Controller
 
     public function __construct(ImageInterface $image)
     {
+    	parent::__construct();
         $this->image = $image;
     }
 

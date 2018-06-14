@@ -131,15 +131,16 @@ function setMultiCategorySelect( $data, $id_selected = null, $parent_id = 0, $ch
 	}
 }
 
-function setMultiCategoryCheckBox( $data, $id_selected = null, $parent_id = 0, $level = 0 ) {
+function setMultiCategoryCheckBox( $data, $id_selected = null, $parent_id = 0, $level = 0, $name = 'parent' ) {
 	if ( count( $data ) > 0 ) {
+
 		foreach ( $data as $key => $item ) {
 			if ( $item->parent_id == $parent_id ) {
 				echo '<label class="mt-checkbox mt-level-' . $level . '">';
 				if ( is_array( $id_selected ) && in_array( $item->id, $id_selected ) ) {
-					echo '<input type="checkbox" value="' . $item->id . '" name="parent[]" checked >' . $item->name;
+					echo '<input type="checkbox" value="' . $item->id . '" name="'.$name.'[]" checked >' . $item->name;
 				} else {
-					echo '<input type="checkbox" value="' . $item->id . '" name="parent[]" >' . $item->name;
+					echo '<input type="checkbox" value="' . $item->id . '" name="'.$name.'[]" >' . $item->name;
 				}
 				echo '<span></span>';
 				echo '</label>';

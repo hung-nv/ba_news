@@ -6,7 +6,7 @@
                 @if(!empty($topMenu))
                     @foreach($topMenu as $i_topMenu)
                         <li @if(isset($slug) && $slug == $i_topMenu->slug)class="active"@endif>
-                            <a href="{{ setUrlByType($i_topMenu->type, $i_topMenu->slug) }}">
+                            <a href="{{ $i_topMenu->url }}">
                                 {{ $i_topMenu->name }}
                             </a>
                         </li>
@@ -29,7 +29,7 @@
     <div class="col-lg-10 logo-right">
         <div class="logo-tren">
             <h1>Tin tức về giới trẻ, teen 24h qua</h1>
-            <form action="{{ route('game.search') }}" method="get">
+            <form action="{{ route('news.search') }}" method="get">
                 <div class="input-group input-group-sm">
                     <input type="text" class="form-control" placeholder="Tìm kiếm..." name='txtSearch'
                            value="{{ old('txtSearch') }}"
@@ -43,9 +43,7 @@
         </div>
 
         <div class="ads">
-			<?php if ( isset( $ads728 ) && $ads728 ): ?>
-                <?php echo $ads728->code; ?>
-            <?php endif; ?>
+            <!-- ads 728 -->
         </div>
     </div>
     <div class="clear"></div>

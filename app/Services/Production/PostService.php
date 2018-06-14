@@ -35,6 +35,12 @@ class PostService implements PostInterface
         return $posts;
     }
 
+    public function getAllPostsByCategory(array $idsCategory,int $type)
+    {
+		$posts = $this->queryPosts($idsCategory, $type, 10)->get();
+		return $posts;
+    }
+
 	/**
 	 * search posts by name
 	 *
@@ -105,7 +111,7 @@ class PostService implements PostInterface
 	 * @param  int $postType
 	 * @return object $posts
 	 */
-    public function queryPosts($idsParent, $postType) {
+    public function queryPosts($idsParent, $postType, $limit = null) {
 	    $posts = DB::table('posts')->select('posts.name', 'posts.slug', 'posts.introduction', 'posts.description', 'posts.image', 'posts.created_at')
 	               ->where('posts.status', 1)
 	               ->where('posts.system_link_type_id', $postType)
@@ -116,8 +122,10 @@ class PostService implements PostInterface
 			    $query->orWhere('post_category.category_id', '=', $id);
 		    }
 	    });
-
 	    $posts->orderByDesc('posts.created_at')->groupBy('posts.id');
+	    if($limit) {
+		    $posts->limit($limit);
+	    }
 	    return $posts;
     }
 }

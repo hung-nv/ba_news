@@ -46,16 +46,24 @@ Route::group(['prefix' => 'administrator', 'middleware' => 'auth', 'namespace' =
 Route::group(['namespace' => 'Frontend'], function () {
 	session(['meta' => getMeta()]);
 	Route::get('/', 'HomepageController@index');
-	Route::get('game/{slug}', ['as' => 'game.view', 'uses' => 'GameController@view'] );
+	Route::get('news/{slug}', ['as' => 'news.view', 'uses' => 'NewsController@view'] );
 	Route::get('page/{slug}', ['as' => 'news.page', 'uses' => 'NewsController@page']);
-	Route::get('/search', ['as' => 'game.search', 'uses' => 'GameController@search']);
-	Route::get('/{slug}', ['as' => 'game.category', 'uses' => 'GameController@category']);
+	Route::get('/search', ['as' => 'news.search', 'uses' => 'NewsController@search']);
+	Route::get('/{slug}', ['as' => 'news.category', 'uses' => 'NewsController@category']);
 });
 
 Route::get('img/{w}/{h}/{src}', function ($w, $h, $src) {
 	$img_path = public_path() . '/' . $src;
 	$img = Image::cache(function ($image) use ($w, $h, $img_path) {
 		return $image->make($img_path)->resize($w, $h);
+	});
+	return Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
+})->where('src', '[A-Za-z0-9\/\.\-\_]+');
+
+Route::get('img/{w}/{src}', function ($w, $src) {
+	$img_path = public_path() . '/' . $src;
+	$img = Image::cache(function ($image) use ($w, $img_path) {
+		return $image->make($img_path)->width($w, null);
 	});
 	return Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
 })->where('src', '[A-Za-z0-9\/\.\-\_]+');

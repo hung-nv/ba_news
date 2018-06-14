@@ -41,13 +41,25 @@
         </div>
     </div>
 
-    <?php $parent = isset($option['parent']) ? explode(',', $option['parent']) : old('parent'); ?>
+    <?php $hot_category = isset($option['hot_category']) ? explode(',', $option['hot_category']) : old('hot_category'); ?>
     <div class="form-group">
-        <label class="col-md-2 control-label">Game Category</label>
+        <label class="col-md-2 control-label">Hot Category</label>
         <div class="col-md-5">
             <div class="mt-checkbox-list"
                  data-error-container="#form_2_services_error">
-		        <?php setMultiCategoryCheckBox($data, $parent) ?>
+                <?php setMultiCategoryCheckBox($hotCategory, $hot_category, 0, 0, 'hot_category'); ?>
+            </div>
+        </div>
+        <div id="form_2_services_error"></div>
+    </div>
+
+    <?php $parent = isset($option['parent']) ? explode(',', $option['parent']) : old('parent'); ?>
+    <div class="form-group">
+        <label class="col-md-2 control-label">News Category</label>
+        <div class="col-md-5">
+            <div class="mt-checkbox-list"
+                 data-error-container="#form_2_services_error">
+		        <?php setMultiCategoryCheckBox($mainCategory, $parent); ?>
             </div>
         </div>
         <div id="form_2_services_error"></div>

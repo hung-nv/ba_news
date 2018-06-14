@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Category;
 use App\Models\Option;
 use App\Models\Post;
-use App\Models\SystemLinkType;
 use App\Services\Interfaces\ImageInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,6 +15,7 @@ class SettingController extends Controller {
 	protected $image;
 
 	public function __construct( ImageInterface $image ) {
+		parent::__construct();
 		$this->image = $image;
 	}
 
@@ -23,9 +24,7 @@ class SettingController extends Controller {
 		$category   = DB::table( 'category' )->select( 'id', 'name', 'slug', 'parent_id', 'status' )
 		                ->get()->toArray();
 
-		$page_type_id = SystemLinkType::where( [ [ 'name', 'like', '%page%' ], [ 'type', 2 ] ] )->firstOrFail()->id;
-
-		$pages = Post::active()->ofType( $page_type_id )->get()->toArray();
+		$pages = Post::active()->ofType( $this->page_type )->get()->toArray();
 
 		if ( empty( $menu_group ) ) {
 			$menus = [];
@@ -68,16 +67,15 @@ class SettingController extends Controller {
 		$pages = Post::ofType( 3 )->get();
 		$menus = MenuGroup::all();
 
-		$system_link_type = SystemLinkType::where( [ [ 'name', 'like', '%game%' ], [ 'type', 1 ] ] )->firstOrFail();
-		$data             = DB::table( 'category' )->select( 'id', 'name', 'slug', 'parent_id', 'status' )
-		                      ->where( 'system_link_type_id', $system_link_type->id )
-		                      ->get();
+		$dataCategory = Category::where('system_link_type_id', $this->news_category_type)->get();
+		$mainCategory = Category::where('system_link_type_id', $this->news_category_type)->get();
 
 		return view( 'backend.theme.setting', [
 			'option' => $options,
 			'pages'  => $pages,
 			'menus'  => $menus,
-			'data'   => $data
+			'hotCategory'   => $dataCategory,
+			'mainCategory'  => $mainCategory
 		] );
 	}
 
@@ -100,8 +98,8 @@ class SettingController extends Controller {
 					$file  = $request->file( $k );
 					$value = $this->image->uploads( $file, 'setting' );
 				} else {
-					if(is_array($v)) {
-						$value = implode(',', $v);
+					if ( is_array( $v ) ) {
+						$value = implode( ',', $v );
 					} else {
 						$value = $v;
 					}
@@ -121,6 +119,10 @@ class SettingController extends Controller {
 				}
 			}
 		}
+
+		$newSession = Option::select( 'key', 'value' )->pluck( 'value', 'key' );
+
+		session(['meta' => $newSession]);
 
 		return redirect()->route( 'setting.index' )->with( [ 'success_message' => 'Update successful' ] );
 	}

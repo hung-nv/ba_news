@@ -13,6 +13,8 @@ class Post extends \Eloquent
         'updated_at'
     ];
 
+	protected $appends = ['url'];
+
     protected $fillable = ['name', 'slug', 'image', 'description', 'content', 'user_id', 'system_link_type_id', 'status',
             'meta_title', 'meta_description', 'meta_keywords', 'introduction', 'view'];
 
@@ -48,5 +50,10 @@ class Post extends \Eloquent
     public function getCreatedAtAttribute($value)
     {
         return date('d/m/Y H.i', strtotime($value));
+    }
+
+    public function getUrlAttribute($value)
+    {
+    	return route('news.view', ['slug' => $this->slug]);
     }
 }

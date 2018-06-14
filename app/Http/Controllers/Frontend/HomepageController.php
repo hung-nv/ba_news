@@ -6,37 +6,36 @@ use App\Models\Category;
 use App\Models\Group;
 use App\Models\Option;
 use App\Models\Post;
-use App\Models\SystemLinkType;
+use App\Services\Interfaces\PostInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Menu;
 
-class HomepageController extends Controller
-{
-	protected $game_type;
-	protected $game_category_type;
+class HomepageController extends Controller {
+	protected $mainCategory;
+	protected $hotCategory;
+	protected $postServices;
 
-	public function __construct(SystemLinkType $system_link_type) {
-		$this->game_type = SystemLinkType::where([['name', 'like', '%game%'], ['type', 2]])->first()->id;
-		$this->game_category_type = SystemLinkType::where([['name', 'like', '%game%'], ['type', 1]])->first()->id;
+	public function __construct( PostInterface $postServices ) {
+		parent::__construct();
+		$this->mainCategory = ! empty( session( 'meta' )['parent'] ) ? session( 'meta' )['parent'] : '';
+		$this->hotCategory  = ! empty( session( 'meta' )['hot_category'] ) ? session( 'meta' )['hot_category'] : '';
+		$this->postServices = $postServices;
 	}
 
-	public function index(Request $request) {
-		$selected_category = Option::where('key', 'parent')->first();
-    	$newGames = Post::ofType($this->game_type)->select('name', 'slug', 'introduction', 'image', 'view')->active()->orderByDesc('created_at')->limit(6)->get();
-    	$hotGroup = Group::where('value', 'like', '%hot%')->first();
-    	if($selected_category) {
-		    $gameCategory = Category::find(explode(',', $selected_category->value));
-	    } else {
-		    $gameCategory = Category::ofType($this->game_category_type)->active()->get();
-	    }
+	public function index( Request $request ) {
+		$newArticles  = Post::ofType( $this->news_details_type )
+		                    ->select( 'name', 'slug', 'introduction', 'image', 'view' )
+		                    ->active()->orderByDesc( 'created_at' )
+		                    ->limit( 10 )
+		                    ->get();
+		$mainCategory = Category::find( explode( ',', $this->mainCategory ) );
 
-    	$hotGames = $hotGroup->posts()->select('name', 'slug', 'introduction', 'image')->limit(4)->get();
+		$hotArticles = $this->postServices->getAllPostsByCategory( explode( ',', $this->hotCategory ), $this->news_details_type );
 
-		return view('homepage.index', [
-			'newGames' => $newGames,
-			'hotGames' => $hotGames,
-			'gameCategory' => $gameCategory,
-		]);
-    }
+		return view( 'homepage.index', [
+			'newArticles'  => $newArticles,
+			'hotArticles'  => $hotArticles,
+			'mainCategory' => $mainCategory,
+		] );
+	}
 }

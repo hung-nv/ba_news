@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\MetaField;
-use App\Models\SystemLinkType;
 use App\Services\Interfaces\ImageInterface;
 use App\Services\Interfaces\MenuInterface;
 use Illuminate\Http\Request;
@@ -16,17 +15,16 @@ use Illuminate\Support\Facades\Session;
 class PageController extends Controller
 {
     protected $image, $menuService;
-    private $page_type_id;
 
     public function __construct(ImageInterface $image, MenuInterface $menuService)
     {
+    	parent::__construct();
         $this->image = $image;
         $this->menuService = $menuService;
-        $this->page_type_id = SystemLinkType::where([['name', 'like', '%page%'], ['type', 2]])->firstOrFail()->id;
     }
 
     public function index() {
-        $pages = Post::where('system_link_type_id', $this->page_type_id)->active()->orderBy('created_at', 'desc')->get();
+        $pages = Post::where('system_link_type_id', $this->page_type)->active()->orderBy('created_at', 'desc')->get();
         return view('backend.page.index', [
             'pages' => $pages
         ]);
@@ -54,7 +52,7 @@ class PageController extends Controller
         $data = $request->all();
         $data['slug'] = $data['slug'] ? str_slug($data['slug']) : str_slug($data['name']);
         $data['user_id'] = \Auth::user()->id;
-        $data['system_link_type_id'] = $this->page_type_id;
+        $data['system_link_type_id'] = $this->page_type;
         $data['description'] = '';
 
         if ($request->hasFile('image')) {

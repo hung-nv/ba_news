@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\Group;
 use App\Models\Post;
-use App\Models\SystemLinkType;
 use App\Services\Interfaces\ImageInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,12 +14,11 @@ use Illuminate\Support\Facades\Session;
 class PostController extends Controller
 {
     protected $image;
-    private $post_type_id;
 
     public function __construct(ImageInterface $image)
     {
+    	parent::__construct();
         $this->image = $image;
-        $this->post_type_id = SystemLinkType::where([['name', 'like', '%news%'], ['type', 2]])->firstOrFail()->id;
     }
 
     /**
@@ -30,7 +28,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::ofType($this->post_type_id)->active()->orderBy('created_at', 'desc')->get();
+        $posts = Post::ofType($this->news_details_type)->active()->orderBy('created_at', 'desc')->get();
         $groups = Group::all();
         return view('backend.post.index', [
             'posts' => $posts,
@@ -45,9 +43,8 @@ class PostController extends Controller
      */
     public function create()
     {
-	    $system_link_type = SystemLinkType::where([['name', 'like', '%news%'], ['type', 1]])->firstOrFail();
         $data = DB::table('category')->select('id', 'name', 'slug', 'parent_id', 'status')
-            ->where('system_link_type_id', $system_link_type->id)
+            ->where('system_link_type_id', $this->news_category_type)
             ->get()->toArray();
 
         return view('backend.post.create', [
@@ -77,7 +74,7 @@ class PostController extends Controller
         $data = $request->all();
         $data['slug'] = $data['slug'] ? str_slug($data['slug']) : str_slug($data['name']);
         $data['user_id'] = \Auth::user()->id;
-        $data['system_link_type_id'] = $this->post_type_id;
+        $data['system_link_type_id'] = $this->news_details_type;
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');

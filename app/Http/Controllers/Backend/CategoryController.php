@@ -19,6 +19,7 @@ class CategoryController extends Controller
 
     public function __construct(ImageInterface $image, MenuInterface $menuService)
     {
+    	parent::__construct();
         $this->image = $image;
         $this->menuService = $menuService;
     }
