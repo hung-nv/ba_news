@@ -1,15 +1,17 @@
 @if (isset($newArticles) && $newArticles)
     <div class="top_main">
-        <div class="slide_top">
-            <a href="{{ $newArticles[0]->url }}" class="slide-img">
-                <img src="/img/464/{{ $newArticles[0]->image }}">
-            </a>
-            <h2 class="slide-title">
-                <a href="{{ $newArticles[0]->url }}">
-                    {{ $newArticles[0]->name }}
+        @if(isset($newArticles[0]) && $newArticles[0])
+            <div class="slide_top">
+                <a href="{{ $newArticles[0]->url }}" class="slide-img">
+                    <img src="/img/464{{ $newArticles[0]->image }}">
                 </a>
-            </h2>
-        </div>
+                <h2 class="slide-title">
+                    <a href="{{ $newArticles[0]->url }}">
+                        {{ $newArticles[0]->name }}
+                    </a>
+                </h2>
+            </div>
+        @endif
 
         <div class="top-main-list">
             <div class="top-main-left">
@@ -17,7 +19,7 @@
                     <div class="top-avg">
                         <div class="top-avg-img">
                             <a href="{{ $newArticles[1]->url }}">
-                                <img src="/img/227/150/{{ $newArticles[1]->image }}">
+                                <img src="/img/227_150{{ $newArticles[1]->image }}">
                             </a>
                         </div>
                         <a href="{{ $newArticles[1]->url }}" class="link">{{ $newArticles[1]->name }}</a>
@@ -42,7 +44,7 @@
                     <div class="top-avg">
                         <div class="top-avg-img">
                             <a href="{{ $newArticles[8]->url }}">
-                                <img src="/img/227/150/{{ $newArticles[8]->image }}">
+                                <img src="/img/227_150{{ $newArticles[8]->image }}">
                             </a>
                         </div>
                         <a href="{{ $newArticles[8]->url }}" class="link">{{ $newArticles[8]->name }}</a>

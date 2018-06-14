@@ -52,18 +52,19 @@ Route::group(['namespace' => 'Frontend'], function () {
 	Route::get('/{slug}', ['as' => 'news.category', 'uses' => 'NewsController@category']);
 });
 
-Route::get('img/{w}/{h}/{src}', function ($w, $h, $src) {
-	$img_path = public_path() . '/' . $src;
-	$img = Image::cache(function ($image) use ($w, $h, $img_path) {
-		return $image->make($img_path)->resize($w, $h);
-	});
-	return Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
-})->where('src', '[A-Za-z0-9\/\.\-\_]+');
-
-Route::get('img/{w}/{src}', function ($w, $src) {
-	$img_path = public_path() . '/' . $src;
-	$img = Image::cache(function ($image) use ($w, $img_path) {
-		return $image->make($img_path)->width($w, null);
-	});
+Route::get('img/{size}/{src}', function ($size, $src) {
+	$imgPath = public_path() . '/' . $src;
+	$sizes = explode('_', $size);
+	if(count($sizes) > 1) {
+        $w = $sizes[0];
+        $h = $sizes[1];
+        $img = Image::cache(function ($image) use ($w, $h, $imgPath) {
+            return $image->make($imgPath)->resize($w, $h);
+        });
+    } else {
+        $img = Image::cache(function ($image) use ($size, $imgPath) {
+            return $image->make($imgPath)->resize($size, null);
+        });
+    }
 	return Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
 })->where('src', '[A-Za-z0-9\/\.\-\_]+');

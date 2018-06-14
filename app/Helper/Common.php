@@ -28,10 +28,6 @@ function joinGroup( $data ) {
 }
 
 /*
- *  Check level of menu
- */
-
-/*
  * Get multi menu (3 floor)
  */
 

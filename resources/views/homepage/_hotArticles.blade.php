@@ -5,7 +5,7 @@
                 @if (isset( $hotArticles[ $i ] ) && $hotArticles[ $i ])
                     <div class="top_left_main_iterm">
                         <a href="{{ route('news.view', ['slug' => $hotArticles[$i]->slug]) }}">
-                            <img src="/img/180/180/{{ $hotArticles[$i]->image }}">
+                            <img src="/img/180_180/{{ $hotArticles[$i]->image }}">
                         </a>
                         <a class='top_left_main_text' href="{{ route('news.view', ['slug' => $hotArticles[$i]->slug]) }}">
                             {{ $hotArticles[$i]->name }}
