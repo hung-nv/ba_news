@@ -10,7 +10,7 @@
 
 @section('content')
     <div class="row">
-        @include('homepage._hotArticles')
+        @include('homepage._selectedArticles')
 
         @include('homepage._newArticles')
 

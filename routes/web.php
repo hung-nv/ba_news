@@ -44,7 +44,7 @@ Route::group(['prefix' => 'administrator', 'middleware' => 'auth', 'namespace' =
 });
 
 Route::group(['namespace' => 'Frontend'], function () {
-	session(['meta' => getMeta()]);
+//	session(['meta' => getMeta()]);
 	Route::get('/', 'HomepageController@index');
 	Route::get('news/{slug}', ['as' => 'news.view', 'uses' => 'NewsController@view'] );
 	Route::get('page/{slug}', ['as' => 'news.page', 'uses' => 'NewsController@page']);
@@ -59,12 +59,14 @@ Route::get('img/{size}/{src}', function ($size, $src) {
         $w = $sizes[0];
         $h = $sizes[1];
         $img = Image::cache(function ($image) use ($w, $h, $imgPath) {
-            return $image->make($imgPath)->resize($w, $h);
+            return $image->make($imgPath)->fit($w, $h);
         });
     } else {
         $img = Image::cache(function ($image) use ($size, $imgPath) {
-            return $image->make($imgPath)->resize($size, null);
+            return $image->make($imgPath)->resize($size, null, function ($constraint) {
+	            $constraint->aspectRatio();
+            });
         });
     }
 	return Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
-})->where('src', '[A-Za-z0-9\/\.\-\_]+');
+})->where(['src' => '[A-Za-z0-9\/\.\-\_]+', 'size' => '[0-9\_]+']);

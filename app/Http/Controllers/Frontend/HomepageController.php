@@ -8,35 +8,35 @@ use App\Services\Interfaces\PostInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class HomepageController extends Controller
-{
-    protected $mainCategory;
-    protected $hotCategory;
-    protected $postServices;
+class HomepageController extends Controller {
+	protected $mainCategory;
+	protected $hotCategory;
+	protected $postServices;
 
-    public function __construct(PostInterface $postServices)
-    {
-        parent::__construct();
-        $this->mainCategory = !empty(session('meta')['parent']) ? session('meta')['parent'] : '';
-        $this->hotCategory = !empty(session('meta')['hot_category']) ? session('meta')['hot_category'] : '';
-        $this->postServices = $postServices;
-    }
+	public function __construct( PostInterface $postServices ) {
+		parent::__construct();
+		$this->mainCategory = ! empty( $this->setting['parent'] ) ? $this->setting['parent'] : '';
+		$this->hotCategory  = ! empty( $this->setting['hot_category'] ) ? $this->setting['hot_category'] : '';
+		$this->postServices = $postServices;
+	}
 
-    public function index(Request $request)
-    {
-        $newArticles = Post::ofType($this->news_details_type)
-            ->select('name', 'slug', 'introduction', 'image', 'view')
-            ->active()->orderByDesc('created_at')
-            ->limit(10)
-            ->get();
-        $mainCategory = Category::find(explode(',', $this->mainCategory));
+	public function index( Request $request ) {
+		$newArticles  = Post::ofType( $this->news_details_type )
+		                    ->select( 'name', 'slug', 'introduction', 'image', 'view' )
+		                    ->active()->orderByDesc( 'created_at' )
+		                    ->limit( 10 )
+		                    ->get();
+		$mainCategory = Category::find( explode( ',', $this->mainCategory ) );
 
-        $hotArticles = $this->postServices->getAllPostsByCategory(explode(',', $this->hotCategory), $this->news_details_type);
+		$selectedArticles = $this->postServices->getAllPostsByCategory(
+			explode( ',', $this->hotCategory ),
+			$this->news_details_type,
+			10 );
 
-        return view('homepage.index', [
-            'newArticles' => $newArticles,
-            'hotArticles' => $hotArticles,
-            'mainCategory' => $mainCategory,
-        ]);
-    }
+		return view( 'homepage.index', [
+			'newArticles'      => $newArticles,
+			'selectedArticles' => $selectedArticles,
+			'mainCategory'     => $mainCategory,
+		] );
+	}
 }

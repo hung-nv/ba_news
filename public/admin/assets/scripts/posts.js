@@ -3,7 +3,7 @@
 $(function () {
     var wrapPosts, url, domain;
 
-    wrapPosts = $('#data-games');
+    wrapPosts = $('#data-posts');
     url = window.location;
 
     if(url.port) {

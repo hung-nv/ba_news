@@ -64,6 +64,7 @@
                                     <th> ID</th>
                                     <th style="width: 60%;"> Information</th>
                                     <th class="data-middle"> Created At</th>
+                                    <th class="data-middle"> Groups </th>
                                     <th class="data-middle"> Status</th>
                                     <th class="data-middle"> Actions</th>
                                 </tr>

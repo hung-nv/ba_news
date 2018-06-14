@@ -35,9 +35,19 @@ class PostService implements PostInterface
         return $posts;
     }
 
-    public function getAllPostsByCategory(array $idsCategory,int $type)
+	/**
+	 * Get all posts by ids category
+	 * @param array $idsCategory
+	 * @param int $type
+	 *
+	 * @return mixed
+	 */
+    public function getAllPostsByCategory(array $idsCategory,int $type, int $limit)
     {
-		$posts = $this->queryPosts($idsCategory, $type, 10)->get();
+    	if(empty($limit) || $limit == 0) {
+    		$limit = 10;
+	    }
+		$posts = $this->queryPosts($idsCategory, $type, $limit)->get();
 		return $posts;
     }
 

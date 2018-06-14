@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Option;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\SystemLinkType;
+use App\Models\Group;
+use Illuminate\Support\Facades\View;
 
 class Controller extends BaseController
 {
@@ -15,9 +18,12 @@ class Controller extends BaseController
     public $news_details_type;
     public $news_category_type;
     public $page_type;
+    public $setting;
 
     public function __construct() {
 		$this->getType();
+		$this->getHotGroupArticles();
+		$this->getSettingSite();
     }
 
     public function getType()
@@ -25,5 +31,18 @@ class Controller extends BaseController
 	    $this->news_details_type = SystemLinkType::where([['name', 'like', '%news%'], ['type', 2]])->first()->id;
 	    $this->news_category_type = SystemLinkType::where([['name', 'like', '%news%'], ['type', 1]])->first()->id;
 	    $this->page_type = SystemLinkType::where([['name', 'like', '%page%'], ['type', 2]])->first()->id;
+    }
+
+    public function getHotGroupArticles()
+    {
+	    $hotGroup = Group::where('value', 'like', '%hot%')->first();
+	    $hotArticles = $hotGroup->posts()->select('name', 'slug', 'introduction', 'image')->limit(10)->get();
+	    View::share('hotArticles', $hotArticles);
+    }
+
+    public function getSettingSite()
+    {
+    	$this->setting = Option::select( 'key', 'value' )->pluck( 'value', 'key' );
+    	View::share('setting', $this->setting);
     }
 }

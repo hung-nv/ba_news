@@ -29,7 +29,7 @@
                                     <div class="home-box-slide">
                                         <div class="home-box-slide-img">
                                             <a href="{{ $posts[$i]->url }}">
-                                                <img src="/img/169_140{{ $posts[$i]->image }}">
+                                                <img src="/img/169{{ $posts[$i]->image }}">
                                             </a>
                                         </div>
                                         <div class="home-box-slide-more">
@@ -74,7 +74,7 @@
     </div>
 
     <div class="main-right">
-
+        @include('homepage._mainRight')
     </div>
 
     <div class="clear"></div>

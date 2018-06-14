@@ -17,7 +17,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
 		$this->composeMenu();
 		$this->composeGames();
 		$this->composeBreadcumbs();
-		$this->composeMeta();
+//		$this->composeMeta();
 		View::share('detect', new Agent());
 	}
 

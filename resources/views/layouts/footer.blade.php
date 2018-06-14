@@ -10,6 +10,8 @@
     <div class="clear"></div>
 
     <div class="infor">
-		Cong ty cp thuong mai evnbay
+		@if(!empty($setting['company_name']))
+            {{ $setting['company_name'] }}
+        @endif
     </div>
 </div>

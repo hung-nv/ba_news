@@ -49,12 +49,12 @@ class GameController extends Controller {
 
 	public function store( Request $request ) {
 		$rules = [
-			'name'                      => 'required|unique:posts,name|max:255',
-			'slug'                      => 'required|unique:posts,slug|max:255',
-			'description'               => 'required',
-			'image'                     => 'required|image|max:10240',
-			'content'                   => 'required',
-			'parent'                    => 'required'
+			'name'        => 'required|unique:posts,name|max:255',
+			'slug'        => 'required|unique:posts,slug|max:255',
+			'description' => 'required',
+			'image'       => 'required|image|max:10240',
+			'content'     => 'required',
+			'parent'      => 'required'
 		];
 
 		$this->validate( $request, $rules );
@@ -63,7 +63,7 @@ class GameController extends Controller {
 		$data['slug']                = $data['slug'] ? str_slug( $data['slug'] ) : str_slug( $data['name'] );
 		$data['user_id']             = \Auth::user()->id;
 		$data['system_link_type_id'] = $this->game_type_id;
-		$data['view']                = rand(2000, 4000);
+		$data['view']                = rand( 2000, 4000 );
 
 		if ( $request->hasFile( 'image' ) ) {
 			$file          = $request->file( 'image' );
@@ -121,12 +121,12 @@ class GameController extends Controller {
 
 	public function update( Request $request, $id ) {
 		$rules = [
-			'name'                      => 'required|unique:posts,name, ' . $request->segment( 3 ) . '|max:255',
-			'slug'                      => 'required|unique:posts,slug, ' . $request->segment( 3 ) . '|max:255',
-			'image'                     => 'image|max:10240',
-			'description'               => 'required',
-			'content'                   => 'required',
-			'parent'                    => 'required'
+			'name'        => 'required|unique:posts,name, ' . $request->segment( 3 ) . '|max:255',
+			'slug'        => 'required|unique:posts,slug, ' . $request->segment( 3 ) . '|max:255',
+			'image'       => 'image|max:10240',
+			'description' => 'required',
+			'content'     => 'required',
+			'parent'      => 'required'
 		];
 
 		$data = $request->all();
@@ -152,21 +152,21 @@ class GameController extends Controller {
 		if ( $game->update( $data ) ) {
 			$game->category()->sync( $request->parent );
 
-			foreach ($array_meta_field as $k=>$v) {
-				if($v !== '' && $v !== null && ! is_array( $v ) ) {
-					if(strlen(strstr($k, 'old')) > 0 || strlen(strstr($k, '_method')) > 0) {
+			foreach ( $array_meta_field as $k => $v ) {
+				if ( $v !== '' && $v !== null && ! is_array( $v ) ) {
+					if ( strlen( strstr( $k, 'old' ) ) > 0 || strlen( strstr( $k, '_method' ) ) > 0 ) {
 						continue;
 					}
 
-					$field = MetaField::where('key_name', $k)->where('post_id', $id)->first();
+					$field = MetaField::where( 'key_name', $k )->where( 'post_id', $id )->first();
 
-					if($field) {
-						$field->update(['key_value' => $v]);
+					if ( $field ) {
+						$field->update( [ 'key_value' => $v ] );
 					} else {
-						$game->fields()->create([
-							'key_name' => $k,
+						$game->fields()->create( [
+							'key_name'  => $k,
 							'key_value' => $v
-						]);
+						] );
 					}
 				}
 			}
