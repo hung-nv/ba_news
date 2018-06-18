@@ -3,56 +3,63 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Post;
+use App\Services\Interfaces\PostInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\Production\PostService;
-use App\Models\MetaField;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 
-class NewsController extends Controller
-{
+class NewsController extends Controller {
 	protected $postServices;
 
-	public function __construct(PostService $postService) {
+	public function __construct( PostInterface $postService ) {
 		parent::__construct();
 		$this->postServices = $postService;
 	}
 
-    public function page($slug) {
-    	$page = Post::where('slug', $slug)->first();
-    	return view('news.page', [
-    		'page' => $page
-	    ]);
-    }
+	public function page( $slug ) {
+		$page = Post::where( 'slug', $slug )->first();
+		Post::where( 'slug', $slug )->update( [ 'view' => DB::raw( 'view + 1' ) ] );
+		$newArticles = Post::ofType( $this->news_details_type )->select( 'name', 'slug', 'introduction', 'image', 'created_at' )->active()->orderByDesc( 'created_at' )->limit( 10 )->get();
 
-	public function view($slug) {
-		$article = Post::where('slug', $slug)->firstOrFail();
-		$metaGame = MetaField::select( 'key_name', 'key_value' )->where( 'post_id', $article->id )->pluck( 'key_value', 'key_name' );
-		$newGames = Post::ofType($this->news_details_type)->select('name', 'slug', 'introduction', 'image')->active()->orderByDesc('created_at')->limit(6)->get();
-		return view('news.view', [
-			'article' => $article,
-			'metaGame' => $metaGame,
-			'newGames' => $newGames
-		]);
+		return view( 'news.page', [
+			'page' => $page,
+			'newArticles' => $newArticles
+		] );
 	}
 
-	public function category($slug) {
-		$category = Category::where('slug', $slug)->first();
-		$articles = $this->postServices->getAllPostsByParentCategory($category->id, [], $this->news_details_type);
-		$articles = $articles->paginate(30);
-		return view('news.category', [
-			'category' => $category,
-			'articles' => $articles
-		]);
+	public function view( $slug ) {
+		$article = Post::where( 'slug', $slug )->first();
+		Post::where( 'slug', $slug )->update( [ 'view' => DB::raw( 'view + 1' ) ] );
+		$newArticles = Post::ofType( $this->news_details_type )->select( 'name', 'slug', 'introduction', 'image', 'created_at' )->active()->orderByDesc( 'created_at' )->limit( 10 )->get();
+
+		return view( 'news.view', [
+			'article'     => $article,
+			'newArticles' => $newArticles
+		] );
 	}
 
-	public function search(Request $request) {
-		$search = $request->txtSearch;
-		$articles = $this->postServices->searchPostsByName($search, $this->news_details_type);
-		$articles = $articles->paginate(30);
-		return view('news.search', [
-			'search' => $search,
+	public function category( $slug ) {
+		$category     = Category::where( 'slug', $slug )->first();
+		$articles     = $this->postServices->getAllPostsByParentCategory( $category->id, [], $this->news_details_type );
+		$articles     = $articles->paginate( 10 );
+		$mostArticles = Post::select( 'name', 'slug', 'introduction', 'image', 'created_at' )->inWeek()->ofType( $this->news_details_type )->active()->orderDesc()->limit( 10 )->get();
+
+		return view( 'news.category', [
+			'category'     => $category,
+			'articles'     => $articles,
+			'mostArticles' => $mostArticles
+		] );
+	}
+
+	public function search( Request $request ) {
+		$search   = $request->txtSearch;
+		$articles = $this->postServices->searchPostsByName( $search, $this->news_details_type );
+		$articles = $articles->paginate( 10 );
+
+		return view( 'news.search', [
+			'search'   => $search,
 			'articles' => $articles
-		]);
+		] );
 	}
 }

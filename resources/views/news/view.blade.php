@@ -1,9 +1,9 @@
 @section('title')
-    {{ $page->meta_title or $page->name }}
+    {{ $article->meta_title or $article->name }}
 @endsection
 
 @section('description')
-    {{ $page->meta_description or $page->description }}
+    {{ $article->meta_description or $article->description }}
 @endsection
 
 @extends('layouts.app')
@@ -11,14 +11,36 @@
 @section('content')
     <div class="row">
         <div class="column1">
+            <ol class="breadcrumb">
+                <li><a href="/">Trang chủ</a></li>
+                @if (count($article->category) == 1)
+                    <li><a href="{{ $article->category->first()->url }}">{{ $article->category->first()->name }}</a></li>
+                @endif
+                <li class="active">{{ $article->name }}</li>
+            </ol>
             <div class="entry-content">
-                <h1>{{ $page->name }}</h1>
+                <h1>{{ $article->name }}</h1>
                 <p class="datetime">
-                    <img src="/img/10/images/icons8-time-50.png" />
-                    <span class="sptime">{{ $page->created_at }}</span>
+                    <img src="/img/10/images/icons8-time-50.png"/>
+                    <span class="sptime">{{ $article->created_at }}</span>
                 </p>
+                <div class="description">
+                    {{ $article->description }}
+                </div>
+                @if ($article->relatedPostsByTag())
+                    <ul class="related">
+                        @foreach ($article->relatedPostsByTag() as $i)
+                            <li><a href="{{ $i->url }}">{{ $i->name }}</a></li>
+                        @endforeach
+                    </ul>
+                @endif
                 <div class="entry-post">
-                    {!! $page->content !!}
+                    @if ( isset( $ads300x250 ) && $ads300x250 )
+                        <div style="width:300px; height:250px; float: left; margin-right: 10px; margin-bottom: 10px;">
+                            <!-- ADS 300X250 -->
+                        </div>
+                    @endif
+                    {!! $article->content !!}
                 </div>
 
                 @if (isset($newArticles) && $newArticles)
@@ -44,7 +66,7 @@
                                 @endfor
                             </div>
                             <div class="other-tren-right">
-                                <img src="{{ asset('images/banner_5.jpg') }}" />
+                                <img src="{{ asset('images/banner_5.jpg') }}"/>
                             </div>
                             <div class="clear"></div>
                         </div>

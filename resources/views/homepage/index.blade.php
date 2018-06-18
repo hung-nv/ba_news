@@ -1,9 +1,9 @@
 @section('title')
-    {{ !empty($meta['meta_title']) ? $meta['meta_title'] : '' }}
+    {{ $setting['meta_title'] or '' }}
 @endsection
 
 @section('description')
-    {{ !empty($meta['meta_description']) ? $meta['meta_description'] : '' }}
+    {{ $setting['meta_description'] or '' }}
 @endsection
 
 @extends('layouts.app')
@@ -24,6 +24,8 @@
             </div>
         </div>
     </div>
+
+    @include('news._topArticles')
 
     <div class="row">
         @include('homepage._mainContent')

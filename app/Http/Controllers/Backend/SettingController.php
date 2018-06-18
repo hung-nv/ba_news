@@ -120,10 +120,6 @@ class SettingController extends Controller {
 			}
 		}
 
-		$newSession = Option::select( 'key', 'value' )->pluck( 'value', 'key' );
-
-		session(['meta' => $newSession]);
-
 		return redirect()->route( 'setting.index' )->with( [ 'success_message' => 'Update successful' ] );
 	}
 }

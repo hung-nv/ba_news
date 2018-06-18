@@ -151,6 +151,7 @@ a
         font-size: 13px
         line-height: 25px
         margin-right: 5px
+        cursor: pointer
 
       &.selected a, &:hover a
         background: #e54e53
@@ -192,8 +193,14 @@ a
   .datetime
     color: #555
     font-size: 12px
+    position: relative
+    img
+      position: absolute
+      top: 4px
     span
       margin-right: 5px
+    .sptime
+      padding-left: 15px
 
   .description
     color: #454545

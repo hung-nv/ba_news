@@ -210,6 +210,7 @@ a {
   font-size: 13px;
   line-height: 25px;
   margin-right: 5px;
+  cursor: pointer;
 }
 
 #ptr ul li.selected a,
@@ -260,10 +261,20 @@ a {
 .entry-content .datetime {
   color: #555;
   font-size: 12px;
+  position: relative;
+}
+
+.entry-content .datetime img {
+  position: absolute;
+  top: 4px;
 }
 
 .entry-content .datetime span {
   margin-right: 5px;
+}
+
+.entry-content .datetime .sptime {
+  padding-left: 15px;
 }
 
 .entry-content .description {

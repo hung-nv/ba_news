@@ -33,10 +33,14 @@ class HomepageController extends Controller {
 			$this->news_details_type,
 			10 );
 
+		$mostArticles = Post::select( 'name', 'slug', 'introduction', 'image', 'created_at' )->inWeek()
+		                    ->ofType( $this->news_details_type )->active()->orderDesc()->limit( 5 )->get();
+
 		return view( 'homepage.index', [
 			'newArticles'      => $newArticles,
 			'selectedArticles' => $selectedArticles,
 			'mainCategory'     => $mainCategory,
+			'mostArticles'     => $mostArticles
 		] );
 	}
 }

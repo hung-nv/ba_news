@@ -32,6 +32,11 @@ class Post extends \Eloquent
         return $this->belongsToMany('App\Models\Group', 'post_group', 'post_id', 'group_id');
     }
 
+    public function tags()
+    {
+    	return $this->belongsToMany('App\Models\Tag', 'post_tag', 'post_id', 'tag_id');
+    }
+
     public function scopeActive($query)
     {
         return $query->where('status', 1);
@@ -56,4 +61,17 @@ class Post extends \Eloquent
     {
     	return route('news.view', ['slug' => $this->slug]);
     }
+
+    public function scopeInWeek($query)
+    {
+    	return $query->havingRaw('(UNIX_TIMESTAMP(now()) - UNIX_TIMESTAMP(created_at)) < ?', [604800]);
+    }
+
+	public function relatedPostsByTag()
+	{
+		return $this->whereHas('tags', function ($query) {
+			$tagIds = $this->tags()->pluck('tags.id')->all();
+			$query->whereIn('tags.id', $tagIds);
+		})->where('id', '<>', $this->id)->limit(5)->get();
+	}
 }
