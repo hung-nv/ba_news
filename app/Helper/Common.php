@@ -235,7 +235,7 @@ function setUrlByType( $type, $slug, $direct = null, $route = null ) {
 			return route( $route );
 			break;
 		default:
-			return route( 'game.category', [ 'slug' => $slug ] );
+			return route( 'news.category', [ 'slug' => $slug ] );
 	}
 }
 

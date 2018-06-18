@@ -11,18 +11,30 @@
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
     <!-- Customizable CSS -->
-    <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/app-mobile.css') }}">
+
     <link rel="stylesheet" href="{{ asset('/css/responsivemobilemenu.css') }}">
     <script type="text/javascript" src="{{ asset('/js/jquery-2.1.2.min.js') }}"></script>
-    <script async type="text/javascript" src="{{ asset('/js/responsivemobilemenu.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/responsivemobilemenu.js') }}"></script>
 </head>
 <body>
-@include('layouts.header')
+@include('mobile.layouts.header')
 
-<div class="wrap-content">
-    @yield('content')
+@include('mobile.layouts.breadcrumbs')
+
+@if (!empty($ads300))
+    <div style="text-align: center; margin-bottom: 5px;">
+        <!-- ADS 300 -->
+        <div class="clear"></div>
+    </div>
+@endif
+
+<div id="wrapper">
+    <div id="content">
+        @yield('content')
+    </div>
 </div>
 
-@include('layouts.footer')
+@include('mobile.layouts.footer')
 </body>
 </html>

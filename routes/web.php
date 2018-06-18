@@ -44,7 +44,7 @@ Route::group(['prefix' => 'administrator', 'middleware' => 'auth', 'namespace' =
 });
 
 Route::group(['namespace' => 'Frontend'], function () {
-	Route::get('/', 'HomepageController@index');
+	Route::get('/', ['as' => 'homepage', 'uses' => 'HomepageController@index'] );
 	Route::get('news/{slug}', ['as' => 'news.view', 'uses' => 'NewsController@view'] );
 	Route::get('page/{slug}', ['as' => 'news.page', 'uses' => 'NewsController@page']);
 	Route::get('/search', ['as' => 'news.search', 'uses' => 'NewsController@search']);

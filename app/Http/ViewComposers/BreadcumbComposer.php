@@ -23,10 +23,10 @@ class BreadcumbComposer
 	    if(Route::current()->slug) {
 	    	$slug = Route::current()->slug;
 		    $action = Route::current()->getAction();
-		    if($action['as'] == 'news.index') {
-			    $text = Category::where('slug', Route::current()->slug)->firstOrFail()->name;
+		    if($action['as'] == 'news.category') {
+			    $text = Category::where('slug', Route::current()->slug)->first()->name;
 		    } else {
-			    $text = Post::where('slug', Route::current()->slug)->firstOrFail()->name;
+			    $text = Post::where('slug', Route::current()->slug)->first()->name;
 		    }
 	    } else if(request()->txtSearch) {
 			$text = request()->txtSearch;

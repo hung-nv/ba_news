@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
     <!-- Customizable CSS -->
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
-    <script type="text/javascript" src="{{ asset('/js/jquery-2.1.2.min.js') }}"></script>
 </head>
 <body>
     @include('layouts.header')

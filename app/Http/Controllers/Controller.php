@@ -44,7 +44,7 @@ class Controller extends BaseController {
 
 	public function getHotGroupArticles() {
 		$hotGroup    = Group::where( 'value', 'like', '%hot%' )->first();
-		$hotArticles = $hotGroup->posts()->select( 'name', 'slug', 'introduction', 'image' )->limit( 10 )->get();
+		$hotArticles = $hotGroup->posts()->select( 'name', 'slug', 'description', 'image', 'posts.created_at' )->limit( 10 )->get();
 		View::share( 'hotArticles', $hotArticles );
 	}
 
@@ -56,14 +56,14 @@ class Controller extends BaseController {
 	public function getMenu()
 	{
 		if(!empty($this->setting['bottom_menu_id'])) {
-			View::composer('layouts.footer', function ($view) {
+			View::composer(['layouts.footer', 'mobile.layouts.footer'], function ($view) {
 				$footerMenu = Menu::group($this->setting['bottom_menu_id']);
 				$view->with('footerMenu', $footerMenu);
 			});
 		}
 
 		if(!empty($this->setting['top_menu_id'])) {
-			View::composer('layouts.header', function ($view) {
+			View::composer(['layouts.header', 'mobile.layouts.header'], function ($view) {
 				$topMenu = Menu::group($this->setting['top_menu_id']);
 				$view->with('topMenu', $topMenu);
 			});
