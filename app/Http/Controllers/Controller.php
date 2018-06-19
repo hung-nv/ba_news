@@ -24,7 +24,7 @@ class Controller extends BaseController {
 		$this->getType();
 		$this->getHotGroupArticles();
 		$this->getSettingSite();
-		$this->getMenu();
+		$this->getMenuToShow();
 	}
 
 	public function getType() {
@@ -53,7 +53,7 @@ class Controller extends BaseController {
 		View::share( 'setting', $this->setting );
 	}
 
-	public function getMenu()
+	public function getMenuToShow()
 	{
 		if(!empty($this->setting['bottom_menu_id'])) {
 			View::composer(['layouts.footer', 'mobile.layouts.footer'], function ($view) {
