@@ -189,7 +189,7 @@ return [
 	    // image
 	    Intervention\Image\ImageServiceProvider::class,
 
-	    Barryvdh\Debugbar\ServiceProvider::class,
+//	    Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
