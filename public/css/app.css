@@ -1320,9 +1320,8 @@ span.more-child {
 }
 
 .box-doc-1 ul li {
-  padding: 8px 10px 8px 0;
+  padding: 8px 10px 0 0;
   display: list-item;
-  border-bottom: 1px dotted #CCC;
   clear: both;
 }
 
@@ -1333,7 +1332,7 @@ span.more-child {
 .box-doc-1 ul li a {
   color: #222;
   font-size: 13px;
-  line-height: 1.8em;
+  line-height: 20px;
   outline: 0 none;
   word-wrap: break-word;
   text-shadow: none;
@@ -1342,5 +1341,27 @@ span.more-child {
 
 .box-doc-1 ul li a:hover {
   text-decoration: underline;
+}
+
+.box-doc-1 ul li a.bold {
+  font-weight: bold;
+}
+
+.box-doc-1 .box-doc-1-first {
+  margin-top: 10px;
+}
+
+.box-doc-1 .box-doc-1-first .box-doc-1-first-img {
+  float: left;
+  width: 40%;
+  margin-right: 10px;
+}
+
+.box-doc-1 .box-doc-1-first .box-doc-1-first-img img {
+  max-width: 100%;
+}
+
+.box-doc-1 .box-doc-1-first p {
+  color: #333;
 }
 

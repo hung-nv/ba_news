@@ -15,19 +15,30 @@
   ul
     list-style: none
     li
-      padding: 8px 10px 8px 0
+      padding: 8px 10px 0 0
       display: list-item
-      border-bottom: 1px dotted #CCC
       clear: both
       &:last-of-type
         border: none
       a
         color: #222
         font-size: 13px
-        line-height: 1.8em
+        line-height: 20px
         outline: 0 none
         word-wrap: break-word
         text-shadow: none
         vertical-align: baseline
         &:hover
           text-decoration: underline
+        &.bold
+          font-weight: bold
+  .box-doc-1-first
+    margin-top: 10px
+    .box-doc-1-first-img
+      float: left
+      width: 40%
+      margin-right: 10px
+      img
+        max-width: 100%
+    p
+      color: #333

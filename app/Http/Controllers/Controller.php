@@ -44,7 +44,7 @@ class Controller extends BaseController {
 
 	public function getHotGroupArticles() {
 		$hotGroup    = Group::where( 'value', 'like', '%hot%' )->first();
-		$hotArticles = $hotGroup->posts()->select( 'name', 'slug', 'description', 'image', 'posts.created_at' )->limit( 10 )->get();
+		$hotArticles = $hotGroup->posts()->select( 'name', 'slug', 'description', 'image', 'posts.created_at' )->limit( 5 )->get();
 		View::share( 'hotArticles', $hotArticles );
 	}
 
