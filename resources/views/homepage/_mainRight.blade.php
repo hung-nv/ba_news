@@ -24,3 +24,25 @@
         </ul>
     </div>
 @endif
+
+@if(isset($baivietmoi) && $baivietmoi)
+    <div class="box-doc-1">
+        <h2>Bài viết mới nhất</h2>
+        <ul>
+            @foreach($baivietmoi as $itemMoi)
+                <li>
+                    <a class="bold" href="{{ $itemMoi->url }}">{{ $itemMoi->name }}</a>
+                    <div class="box-doc-1-first">
+                        <div class="box-doc-1-first-img">
+                            <img src="/img/116_80/{{ $itemMoi->image }}"/>
+                        </div>
+                        <p>
+                            {{ $itemMoi->description }}
+                        </p>
+                    </div>
+                    <div class="clear"></div>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+@endif

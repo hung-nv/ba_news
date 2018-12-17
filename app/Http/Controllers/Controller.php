@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Option;
+use App\Models\Post;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -46,6 +47,9 @@ class Controller extends BaseController {
 		$hotGroup    = Group::where( 'value', 'like', '%hot%' )->first();
 		$hotArticles = $hotGroup->posts()->select( 'name', 'slug', 'description', 'image', 'posts.created_at' )->limit( 5 )->get();
 		View::share( 'hotArticles', $hotArticles );
+
+		$baivietmoi = Post::orderByDesc('created_at')->limit(5)->get();
+		View::share('baivietmoi', $baivietmoi);
 	}
 
 	public function getSettingSite() {
