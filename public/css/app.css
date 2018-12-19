@@ -54,13 +54,29 @@ a {
 }
 
 #menutop {
-  background-color: #fff;
-  border-bottom: 1px solid #eee;
+  background-color: #2fa4e7;
+  border-bottom: 1px solid #1995dc;
   font-weight: 200;
   margin-bottom: 0;
   margin-top: -2px;
   min-height: 50px;
   position: relative;
+}
+
+#menutop .navbar-collapse {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#menutop .menu-inner {
+  width: 75%;
+  float: left;
+}
+
+#menutop .search-inner {
+  width: 25%;
+  float: left;
+  padding-top: 18px;
 }
 
 #menutop .container {
@@ -85,27 +101,27 @@ a {
 }
 
 #menutop ul li a {
-  color: #999;
+  color: #fff;
   line-height: 30px;
-  padding: 18px 15px;
+  padding: 18px 14px;
   display: block;
   position: relative;
 }
 
 #menutop ul li a:focus,
 #menutop ul li a:hover {
-  background: #1fa67a;
+  background: #178acc;
   color: #fff;
 }
 
 #menutop ul li.active a {
-  background: #1fa67a;
+  background: #178acc;
   color: #fff;
 }
 
 #logo {
   width: 1000px;
-  margin: 0 auto 20px;
+  margin: 0 auto 10px;
   position: relative;
   padding: 10px 0;
   clear: both;
@@ -541,14 +557,14 @@ a {
 }
 
 .top_left {
-  float: left;
+  display: inline-block;
   width: 216px;
   height: 794px;
   overflow: hidden;
 }
 
 .top_left_main {
-  background: #1fa67a;
+  background: #2fa4e7;
   float: left;
   overflow: hidden;
   width: 197px;
@@ -669,7 +685,7 @@ a {
 }
 
 .slide_top h2.slide-title a {
-  color: #6d6e71;
+  color: #000;
   font-weight: bold;
   font-size: 18px;
   float: left;
@@ -696,7 +712,7 @@ a {
 .top-avg {
   background: #EBEBEB;
   overflow: hidden;
-  height: 200px;
+  height: 208px;
 }
 
 .top-avg-img {
@@ -715,7 +731,8 @@ a {
   padding: 10px 5px;
   height: 49px;
   overflow: hidden;
-  color: #752b68;
+  color: #000;
+  font-weight: bold;
 }
 
 .top-list {
@@ -738,13 +755,14 @@ a {
   display: list-item;
   font-size: 11px;
   font-weight: bold;
-  max-height: 44px;
+  max-height: 48px;
   overflow: hidden;
-  padding: 4px 0 2px 3px;
+  padding: 4px 0 5px 3px;
+  line-height: 20px;
 }
 
 .top-list ul li a {
-  color: #6d6e71;
+  color: #333;
   line-height: 18px;
 }
 
@@ -1080,7 +1098,8 @@ a {
 }
 
 .home-box-slide-more a {
-  color: #752b68;
+  color: #000;
+  font-weight: bold;
   font-size: 13px;
   line-height: 1.5;
 }
@@ -1363,5 +1382,6 @@ span.more-child {
 
 .box-doc-1 .box-doc-1-first p {
   color: #333;
+  font-size: 12px;
 }
 
