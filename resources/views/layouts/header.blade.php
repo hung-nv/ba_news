@@ -33,20 +33,18 @@
 </div>
 
 <div id="logo">
-    <div class="logo-left col-lg-2">
+    <h1 class="header-title">Tin tức về giới trẻ, teen 24h qua</h1>
+    <div class="logo-left col-md-3">
         <a href="/">
-            @if(!empty($meta['company_logo']))
-                <img src="{{ $meta['company_logo'] }}"/>
+            @if(!empty($setting['company_logo']))
+                <img src="{{ $setting['company_logo'] }}"/>
             @endif
         </a>
     </div>
 
-    <div class="col-lg-10 logo-right">
-        <div class="logo-tren">
-            <h1>Tin tức về giới trẻ, teen 24h qua</h1>
-        </div>
+    <div class="col-md-9 logo-right">
         <div class="ads">
-            <!-- ads 728 -->
+            <img src="{{ asset('images/728x90.jpeg') }}"/>
         </div>
     </div>
     <div class="clear"></div>
