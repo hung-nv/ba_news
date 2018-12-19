@@ -46,22 +46,24 @@
 
                         @if (count($posts) > 2)
                             <div class="home-box-right">
-                                <a class="slide" href="{{ $posts[2]->url }}">
-                                    <div class="home-box-right-slide-img">
-                                        <img src="/img/225_190{{ $posts[2]->image }}">
-                                    </div>
-                                    <div class="home-box-right-text">{{ $posts[2]->name }}</div>
-                                </a>
+                                <div class="home-box-right-inner">
+                                    <a class="slide" href="{{ $posts[2]->url }}">
+                                        <div class="home-box-right-slide-img">
+                                            <img src="/img/225_190{{ $posts[2]->image }}">
+                                        </div>
+                                        <div class="home-box-right-text">{{ $posts[2]->name }}</div>
+                                    </a>
 
-                                @if (count($posts) > 3)
-                                    <ul>
-                                        @for ($i = 3; $i < 7; $i++)
-                                            @if (isset($posts[$i]) && $posts[$i])
-                                                <li><a href="{{ $posts[$i]->url }}">{{ $posts[$i]->name }}</a></li>
-                                            @endif
-                                        @endfor
-                                    </ul>
-                                @endif
+                                    @if (count($posts) > 3)
+                                        <ul>
+                                            @for ($i = 3; $i < 7; $i++)
+                                                @if (isset($posts[$i]) && $posts[$i])
+                                                    <li><a href="{{ $posts[$i]->url }}">{{ $posts[$i]->name }}</a></li>
+                                                @endif
+                                            @endfor
+                                        </ul>
+                                    @endif
+                                </div>
                             </div>
                         @endif
 

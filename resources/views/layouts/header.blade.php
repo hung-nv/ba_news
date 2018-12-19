@@ -33,7 +33,7 @@
 </div>
 
 <div id="logo">
-    <h1 class="header-title">Tin tức về giới trẻ, teen 24h qua</h1>
+    <h1 class="header-title hidden">Tin tức về giới trẻ, teen 24h qua</h1>
     <div class="logo-left col-md-3">
         <a href="/">
             @if(!empty($setting['company_logo']))
