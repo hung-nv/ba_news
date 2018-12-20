@@ -593,13 +593,13 @@ a {
   width: 100%;
   margin-top: 12px;
   background: none repeat scroll 0 0 #F2F2F3;
-  height: 350px;
+  height: 100%;
   overflow: hidden;
 }
 
 .right_hot_news_main {
   float: left;
-  height: 341px;
+  height: 100%;
   overflow: hidden;
   margin-top: 5px;
   width: 212px;
