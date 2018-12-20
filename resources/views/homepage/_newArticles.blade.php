@@ -3,7 +3,7 @@
         @if(isset($newArticles[0]) && $newArticles[0])
             <div class="slide_top">
                 <a href="{{ $newArticles[0]->url }}" class="slide-img">
-                    <img src="/img/469{{ $newArticles[0]->image }}">
+                    <img src="/img/469_312{{ $newArticles[0]->image }}">
                 </a>
                 <h2 class="slide-title">
                     <a href="{{ $newArticles[0]->url }}">
