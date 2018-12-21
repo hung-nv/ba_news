@@ -52,7 +52,7 @@ class Controller extends BaseController
         $hotArticles = $hotGroup->posts()->select('name', 'slug', 'description', 'image', 'posts.created_at')->limit(5)->get();
         View::share('hotArticles', $hotArticles);
 
-        $baivietmoi = Post::orderByDesc('created_at')->limit(5)->get();
+        $baivietmoi = Post::ofType($this->news_details_type)->orderByDesc('created_at')->limit(5)->get();
         View::share('baivietmoi', $baivietmoi);
     }
 
