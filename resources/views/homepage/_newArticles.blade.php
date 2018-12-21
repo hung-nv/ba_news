@@ -3,7 +3,7 @@
         @if(isset($newArticles[0]) && $newArticles[0])
             <div class="slide_top">
                 <a href="{{ $newArticles[0]->url }}" class="slide-img">
-                    <img src="/img/469{{ $newArticles[0]->image }}">
+                    <img src="/img/469_312{{ $newArticles[0]->image }}">
                 </a>
                 <h2 class="slide-title">
                     <a href="{{ $newArticles[0]->url }}">
@@ -28,7 +28,7 @@
 
                 <div class="top-list">
                     <ul>
-                        @for ($i = 2; $i < 7; $i++)
+                        @for ($i = 2; $i < 6; $i++)
                             @if (isset($newArticles[$i]) && $newArticles[$i])
                                 <li>
                                     <a href="{{ $newArticles[$i]->url }}">{{ $newArticles[$i]->name }}</a>
@@ -40,20 +40,20 @@
             </div>
 
             <div class="top-main-right">
-                @if (isset( $newArticles[8] ) && $newArticles[8])
+                @if (isset( $newArticles[6] ) && $newArticles[6])
                     <div class="top-avg">
                         <div class="top-avg-img">
-                            <a href="{{ $newArticles[8]->url }}">
-                                <img src="/img/227_150{{ $newArticles[8]->image }}">
+                            <a href="{{ $newArticles[6]->url }}">
+                                <img src="/img/227_150{{ $newArticles[6]->image }}">
                             </a>
                         </div>
-                        <a href="{{ $newArticles[8]->url }}" class="link">{{ $newArticles[8]->name }}</a>
+                        <a href="{{ $newArticles[6]->url }}" class="link">{{ $newArticles[6]->name }}</a>
                     </div>
                 @endif
 
                 <div class="top-list">
                     <ul>
-                        @for ($i = 9; $i < 14; $i ++)
+                        @for ($i = 7; $i < 11; $i ++)
                             @if (isset( $newArticles[ $i ] ) && $newArticles[ $i ])
                                 <li>
                                     <a href="{{ $newArticles[$i]->url }}">

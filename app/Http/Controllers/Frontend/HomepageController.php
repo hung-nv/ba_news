@@ -30,7 +30,7 @@ class HomepageController extends Controller
         $newArticles = Post::ofType($this->news_details_type)
             ->select('name', 'slug', 'introduction', 'image', 'view')
             ->active()->orderByDesc('created_at')
-            ->limit(10)
+            ->limit(11)
             ->get();
         $mainCategory = Category::find(explode(',', $this->mainCategory));
 
