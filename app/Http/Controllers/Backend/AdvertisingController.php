@@ -2,114 +2,101 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\Advertising;
-use Illuminate\Http\Request;
+use App\Http\Requests\AdvertisingStore;
+use App\Http\Requests\AdvertisingUpdate;
+use App\Services\AdvertisingServices;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Session;
 
 class AdvertisingController extends Controller
 {
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
+    protected $advertisingServices;
 
-	public function index()
-	{
-		$ads = Advertising::select(['id', 'name', 'code', 'is_mobile', 'location'])->get();
-		return view('backend.advertising.index', [
-			'ads' => $ads
-		]);
-	}
+    public function __construct(AdvertisingServices $advertisingServices)
+    {
+        parent::__construct();
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function create()
-	{
-		return view('backend.advertising.create');
-	}
+        $this->advertisingServices = $advertisingServices;
+    }
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request $request
-	 * @return \Illuminate\Http\Response
-	 */
-	public function store(Request $request)
-	{
-		$rules = [
-			'code' => 'required',
-			'location' => 'required|unique:advertising,location',
-		];
+    /**
+     * Get all advertising.
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index()
+    {
+        $advertising = $this->advertisingServices->getAllAdvertising();
 
-		$this->validate($request, $rules);
+        return view('backend.advertising.index', [
+            'data' => $advertising
+        ]);
+    }
 
-		$data = $request->all();
+    /**
+     * Create advertising.
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('backend.advertising.create');
+    }
 
-		if ($post = Advertising::create($data)) {
-			return redirect()->route('advertising.index')->with(['success_message' => 'Your ads has been created!']);
-		}
+    /**
+     * Store advertising.
+     * @param AdvertisingStore $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function store(AdvertisingStore $request)
+    {
+        $respon = $this->advertisingServices->createAdvertising($request);
 
-	}
+        return redirect()->route('advertising.index')->with([
+            'success' => $respon
+        ]);
+    }
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit($id)
-	{
-		$ads = Advertising::findOrFail($id);
+    /**
+     * Edit advertising.
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $advertising = $this->advertisingServices->getAdvertisingById($id);
 
-		return view('backend.advertising.update', [
-			'ads' => $ads,
-		]);
-	}
+        return view('backend.advertising.update', [
+            'data' => $advertising
+        ]);
+    }
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update(Request $request, $id)
-	{
-		$rules = [
-			'code' => 'required'
-		];
-		$this->validate($request, $rules);
+    /**
+     * Update advertising.
+     * @param AdvertisingUpdate $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function update(AdvertisingUpdate $request, $id)
+    {
+        $response = $this->advertisingServices->updateAdvertising($request, $id);
 
-		$data = $request->all();
+        return redirect()->route('advertising.index')->with([
+            'success' => $response
+        ]);
+    }
 
-		$ads = Advertising::findOrFail($id);
+    /**
+     * Delete advertising.
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function destroy($id)
+    {
+        $this->advertisingServices->deleteAdvertisingById($id);
 
-		if ($ads->update($data)) {
-			return redirect()->route('advertising.index')->with(['success_message' => 'Your ads has been updated!']);
-		}
-
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function destroy($id)
-	{
-		$ads = Advertising::findOrFail($id);
-
-		if ($ads->delete()) {
-			Session::flash('success_message', 'Your ads has been delete!');
-		} else {
-			Session::flash('error_message', 'Fail to delete ads');
-		}
-		return redirect()->route('advertising.index');
-	}
+        return redirect()->route('advertising.index')->with([
+            'success' => 'Delete successful'
+        ]);
+    }
 }

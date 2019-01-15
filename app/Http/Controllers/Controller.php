@@ -12,6 +12,7 @@ use App\Models\SystemLinkType;
 use App\Models\Group;
 use App\Models\Menu;
 use Illuminate\Support\Facades\View;
+use App\Models\Advertising;
 
 class Controller extends BaseController
 {
@@ -28,6 +29,7 @@ class Controller extends BaseController
         $this->getHotGroupArticles();
         $this->getSettingSite();
         $this->getMenuToShow();
+        $this->getAdvertising();
     }
 
     public function getType()
@@ -44,6 +46,13 @@ class Controller extends BaseController
             ['name', 'like', '%page%'],
             ['type', 2]
         ])->first()->id;
+    }
+
+    public function getAdvertising()
+    {
+        $advertising = Advertising::all()->pluck('content', 'id');
+
+        View::share('advertising', $advertising);
     }
 
     public function getHotGroupArticles()

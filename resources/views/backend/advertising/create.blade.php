@@ -1,66 +1,63 @@
 @extends('backend.layouts.app')
 
-@section('title')
-    Manage Advertising
+@section('title', 'Create Advertising')
+
+@section('pageId', 'create-update-advertising')
+
+@section('breadcrumbs')
+    <a href="{{ route('advertising.index') }}">Users</a>
+    <i class="fa fa-circle"></i>
 @endsection
 
 @section('content')
-    <div class="page-content-wrapper">
-        <div class="page-content">
-            <div class="page-bar">
-                <ul class="page-breadcrumb">
-                    <li>
-                        <a href="{{ route('admin.dashboard') }}">Home</a>
-                        <i class="fa fa-circle"></i>
-                    </li>
-                    <li>
-                        <a href="{{ route('advertising.index') }}">Advertising</a>
-                        <i class="fa fa-circle"></i>
-                    </li>
-                    <li>
-                        <span>All</span>
-                    </li>
-                </ul>
-            </div>
+    <h3 class="page-title"> Managed Advertising
+        <small>Create</small>
+    </h3>
 
-            <h3 class="page-title">Advertising</h3>
+    <div class="row">
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="portlet light bordered">
-                        <div class="portlet-title">
-                            <div class="caption font-blue-haze">
-                                <i class="icon-settings font-blue-haze"></i>
-                                <span class="caption-subject bold uppercase"> Create Advertising</span>
-                            </div>
-                            <div class="actions">
-                                <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;"
-                                   data-original-title="" title=""> </a>
-                            </div>
-                        </div>
-                        <div class="portlet-body form">
-                            <form action="{{ route('advertising.store') }}" class="form-horizontal" role="form"
-                                  method="post" enctype="multipart/form-data">
-                                {{ csrf_field() }}
-                                <div class="form-body">
+        <div class="col-md-12">
 
-                                    @include('backend.blocks.errors')
+            <div class="portlet box blue">
 
-                                    @include('backend.advertising._form')
+                @include('backend.common.pageHeading')
 
-                                </div>
-                                <div class="form-actions">
-                                    <div class="row">
-                                        <div class="col-md-offset-3 col-md-9">
-                                            <button type="submit" class="btn blue">Submit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                <div class="portlet-body form">
+
+                    @include('backend.blocks.message')
+
+                    <form action="{{ route('advertising.store') }}" class="form-horizontal form-row-seperated" role="form"
+                          method="post" enctype="multipart/form-data">
+
+                        {{ csrf_field() }}
+
+                        @include('backend.blocks.errors')
+
+                        @include('backend.advertising.partial._form')
+
+                        @include('backend.common.actionForm')
+
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@section('style')
+    <link href="{{ asset('/libs/select2/css/select2.min.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('/libs/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('/admin/css/fileinput.min.css') }}"
+          rel="stylesheet" type="text/css"/>
+@endsection
+
+@push('script')
+    <script src="{{ asset('/libs/select2/js/select2.full.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('/libs/fileinput.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('/libs/piexif.min.js') }}"
+            type="text/javascript"></script>
+@endpush
