@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +11,4 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.sass('resources/assets/sass/app.sass', 'public/css');
-mix.sass('resources/assets/sass/app-mobile.sass', 'public/css');
+mix.js('resources/assets/js/admin/app.js', 'public/admin/js');

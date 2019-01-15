@@ -14,6 +14,11 @@
     @include('backend.layouts.css.core')
     @yield('style')
     @include('backend.layouts.css.layouts')
+
+    @php($viewData = isset($viewData) ? $viewData : '')
+    <script type="text/javascript">
+        const viewData = {!! json_encode($viewData) !!};
+    </script>
 </head>
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-container-bg-solid">
@@ -22,7 +27,7 @@
 
 <div class="clearfix"></div>
 
-<div class="page-container">
+<div class="page-container mainComponent" id="@yield('pageId')">
 
     @include('backend.layouts.sidebar')
     @yield('content')
