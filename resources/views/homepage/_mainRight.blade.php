@@ -25,6 +25,12 @@
     </div>
 @endif
 
+@if(!empty($advertising[config('const.advertising.pc.sidebar')]))
+    <div style="width:300px; margin: 10px auto;">
+        {!! $advertising[config('const.advertising.pc.sidebar')] !!}
+    </div>
+@endif
+
 @if(isset($baivietmoi) && $baivietmoi)
     <div class="box-doc-1">
         <h2>Bài viết mới nhất</h2>

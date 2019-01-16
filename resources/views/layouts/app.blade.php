@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
     <!-- Customizable CSS -->
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+
+    @if(!empty($setting['private_script']))
+        {!! $setting['private_script'] !!}
+    @endif
 </head>
 <body>
     @include('layouts.header')

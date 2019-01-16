@@ -23,4 +23,12 @@
             <span class="help-block"> max 255 chars </span>
         </div>
     </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">Private Script:</label>
+        <div class="col-md-5">
+            <textarea class="form-control maxlength-handler" rows="8" name="private_script"
+                      maxlength="1000">{{ $option['private_script'] or old('private_script') }}</textarea>
+        </div>
+    </div>
 </div>

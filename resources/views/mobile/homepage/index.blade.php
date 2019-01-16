@@ -69,9 +69,9 @@
             @endif
 
 
-            @if ($loop->first && !empty($ads300))
+            @if ($loop->first && !empty($advertising[config('const.advertising.mobile.trangchu_tren')]))
                 <div class="ads" style="margin-left: -25px !important; margin-right: -25px !important;">
-                    <!-- ADS 300 -->
+                    {!! $advertising[config('const.advertising.mobile.trangchu_tren')] !!}
                 </div>
             @endif
         @endforeach

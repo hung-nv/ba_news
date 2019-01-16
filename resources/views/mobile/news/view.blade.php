@@ -31,9 +31,9 @@
             </ul>
         @endif
 
-        @if (!empty($ads300))
+        @if(!empty($advertising[config('const.advertising.mobile.baiviet_tren')]))
             <div style="margin: 10px auto; left: 0; right: 0;">
-                <!-- -->
+                {!! $advertising[config('const.advertising.mobile.baiviet_tren')] !!}
             </div>
         @endif
 
@@ -41,9 +41,9 @@
             {!! $article->content !!}
         </div>
 
-        @if (!empty($ads300))
+        @if(!empty($advertising[config('const.advertising.mobile.baiviet_duoi')]))
             <div style="margin: 10px auto; left: 0; right: 0;">
-                <!-- -->
+                {!! $advertising[config('const.advertising.mobile.baiviet_duoi')] !!}
             </div>
         @endif
 

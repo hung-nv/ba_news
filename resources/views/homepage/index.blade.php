@@ -16,11 +16,19 @@
 
         <div class="top-right">
             <div class="ads">
-                <img src="{{ asset('images/chup_san_pham_sang_tao.jpeg') }}" />
+                @if(!empty($advertising[config('const.advertising.pc.trangchu_top_tren')]))
+                    {!! $advertising[config('const.advertising.pc.trangchu_top_tren')] !!}
+                @else
+                    <img src="{{ asset('images/chup_san_pham_sang_tao.jpeg') }}" />
+                @endif
             </div>
 
             <div class="top-right-qc">
-                <img src="{{ asset('images/imgdai2.jpg') }}" />
+                @if(!empty($advertising[config('const.advertising.pc.trangchu_top_duoi')]))
+                    {!! $advertising[config('const.advertising.pc.trangchu_top_duoi')] !!}
+                @else
+                    <img src="{{ asset('images/imgdai2.jpg') }}" />
+                @endif
             </div>
         </div>
     </div>

@@ -11,8 +11,15 @@
     <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/app-mobile.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/responsivemobilemenu.css') }}">
+    @if(!empty($setting['private_script']))
+        {!! $setting['private_script'] !!}
+    @endif
 </head>
 <body>
+@if(!empty($advertising[config('const.advertising.mobile.all_page')]))
+    {!! $advertising[config('const.advertising.mobile.all_page')] !!}
+@endif
+
 @include('mobile.layouts.header')
 
 @include('mobile.layouts.breadcrumbs')

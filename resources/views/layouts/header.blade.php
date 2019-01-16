@@ -44,7 +44,11 @@
 
     <div class="col-md-9 logo-right">
         <div class="ads">
-            <img src="{{ asset('images/728x90.jpeg') }}"/>
+            @if(!empty($advertising[config('const.advertising.pc.duoi_menu')]))
+                {!! $advertising[config('const.advertising.pc.duoi_menu')] !!}
+            @else
+                <img src="{{ asset('images/728x90.jpeg') }}"/>
+            @endif
         </div>
     </div>
     <div class="clear"></div>

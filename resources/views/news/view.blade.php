@@ -35,9 +35,9 @@
                     </ul>
                 @endif
                 <div class="entry-post">
-                    @if ( isset( $ads300x250 ) && $ads300x250 )
+                    @if(!empty($advertising[config('const.advertising.pc.bai_viet_tren')]))
                         <div style="width:300px; height:250px; float: left; margin-right: 10px; margin-bottom: 10px;">
-                            <!-- ADS 300X250 -->
+                            {!! $advertising[config('const.advertising.pc.bai_viet_tren')] !!}
                         </div>
                     @endif
                     {!! $article->content !!}
@@ -66,7 +66,11 @@
                                 @endfor
                             </div>
                             <div class="other-tren-right">
-                                <img src="{{ asset('images/banner_5.jpg') }}"/>
+                                @if(!empty($advertising[config('const.advertising.pc.bai_viet_duoi')]))
+                                    {!! $advertising[config('const.advertising.pc.bai_viet_duoi')] !!}
+                                @else
+                                    <img src="{{ asset('images/banner_5.jpg') }}"/>
+                                @endif
                             </div>
                             <div class="clear"></div>
                         </div>
